@@ -6,18 +6,17 @@ class MaxChocolatierSpider(scrapy.Spider):
     start_urls = ['https://en.maxchocolatier.com/']
 
     def parse(self, response):
-        # Extract information about the products
         products = response.css('.product-inner')
-
+        print(response.body)
         for product in products:
             product_info = {
-                'name': product.css('.product-title a::text').get(),
-                'description': product.css('.product-description p::text').get(),
-                'ingredients': product.css('.product-ingredients p::text').get(),
-                'price': product.css('.price .woocommerce-Price-amount::text').get(),
+                'name': product.css('.pop__product_card_title a::text').get(),
+                'description': product.css('.pop__product_card_desc p::text').get(),
+                'price': product.css('.pop__product_card_price p::text').get(),
+                # 'price': product.css('.price .woocommerce-Price-amount::text').get(),
             }
+            
 
-            # Check if any relevant data is present
             if any(product_info.values()):
                 yield product_info
 
