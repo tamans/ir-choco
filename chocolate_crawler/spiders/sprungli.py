@@ -8,6 +8,7 @@ class SprungliSpider(scrapy.Spider):
     def parse(self, response):
         # Extract information about the page
         page_info = {
+            'docno': response.url,
             'title': response.css('title::text').get(),
             'description': response.css('meta[name="description"]::attr(content)').get(),
             'ingredients': response.css('div.ingredients::text').get(),

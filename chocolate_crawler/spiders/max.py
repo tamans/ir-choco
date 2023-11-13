@@ -6,23 +6,21 @@ class MaxChocolatierSpider(scrapy.Spider):
     start_urls = ['https://en.maxchocolatier.com/']
 
     def parse(self, response):
-        # Extract information about the products from the webpage
-        products = response.css('div.product')
-        
+        # Extract information about the products
+        products = response.css('.product-inner')
+
         for product in products:
-            title = product.css('h2.product-title a::text').get()
-            description = product.css('div.product-description::text').get()
-            price = product.css('span.price::text').get()
+            product_info = {
+                'name': product.css('.product-title a::text').get(),
+                'description': product.css('.product-description p::text').get(),
+                'ingredients': product.css('.product-ingredients p::text').get(),
+                'price': product.css('.price .woocommerce-Price-amount::text').get(),
+            }
 
             # Check if any relevant data is present
-            if title and description and price:
-                yield {
-                    'title': title.strip(),
-                    'description': description.strip(),
-                    'price': price.strip(),
-                    'url': response.url,
-                }
+            if any(product_info.values()):
+                yield product_info
 
         # Follow links to other pages if needed
-        for next_page in response.css('li.item.pages-item-next a::attr(href)'):
+        for next_page in response.css('a.next::attr(href)'):
             yield response.follow(next_page, self.parse)
