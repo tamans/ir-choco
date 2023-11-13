@@ -11,6 +11,8 @@ class ChocolateSpider(scrapy.Spider):
             'docno': response.url,  # Replace with a suitable identifier
             'title': response.css('h1::text').get(),
             'description': response.css('p::text').get(),
+            'ingredients': response.css('div.ingredients::text').get(),
+            'price': response.css('span.price::text').get(),
         }
 
         # Check if any relevant data is present

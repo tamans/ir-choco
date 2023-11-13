@@ -6,19 +6,18 @@ class SprungliSpider(scrapy.Spider):
     start_urls = ['https://www.spruengli.ch/']
 
     def parse(self, response):
-        # Extract information about chocolates from the webpage
-        for product in response.css('.product-item'):
-            chocolate_info = {
-                'name': product.css('.product-title a::text').get(),
-                'description': product.css('.product-description::text').get(),
-                'price': product.css('.product-price .price::text').get(),
-            }
+        # Extract information about the page
+        page_info = {
+            'title': response.css('title::text').get(),
+            'description': response.css('meta[name="description"]::attr(content)').get(),
+            'ingredients': response.css('div.ingredients::text').get(),
+            'price': response.css('span.price::text').get(),
+        }
 
-            # Check if any relevant data is present
-            if any(chocolate_info.values()):
-                yield chocolate_info
+        # Check if any relevant data is present
+        if any(page_info.values()):
+            yield page_info
 
-        # Follow pagination links to crawl additional pages
-        next_page = response.css('.next::attr(href)').get()
-        if next_page:
+        # Follow links to other pages if needed
+        for next_page in response.css('a::attr(href)'):
             yield response.follow(next_page, self.parse)
