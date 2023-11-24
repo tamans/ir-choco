@@ -14,14 +14,10 @@ class LindtChocolatierSpider(scrapy.Spider):
         elif tags:
             self.tags = tags.split(',')
         else:
-            self.tags = ['our-chocolate'
-                        #  'our-chocolate/our-brands', 'our-chocolate/our-brands/lindor', 'our-brands/excellence',
-                        # 'our-chocolate/our-brands/pralines','our-chocolate/our-brands/creation','our-chocolate/our-brands/hello', 'our-chocolate/gift-ideas', 
-                        # 'our-chocolate/type',
-                        # 'our-chocolate/type/dark-chocolate', 'our-chocolate/type/white-chocolate', 'our-chocolate/type/milk-chocolate'
+            self.tags = ['/our-brands', '/gift-ideas','/type',
                         ]
 
-        self.start_urls = [f'https://www.chocolate.lindt.com/{tag}' for tag in self.tags]
+        self.start_urls = [f'https://www.chocolate.lindt.com/our-chocolate/{tag}' for tag in self.tags]
 
         super().__init__(**kwargs)
 
@@ -58,5 +54,5 @@ class LindtChocolatierSpider(scrapy.Spider):
         #         yield product_info
 
         # Follow links to other pages if needed
-        for next_page in response.css('a.next::attr(href)'):
+        for next_page in response.css('a.product-item-link::attr(href)'):
             yield response.follow(next_page, self.parse)
