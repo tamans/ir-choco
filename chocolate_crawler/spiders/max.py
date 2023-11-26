@@ -35,11 +35,10 @@ class MaxChocolatier(scrapy.Spider):
         else:
             logging.warning(f"Missing data for {response.url}. Skipping.")
         
-        for next_page in response.css('a.pop__product_card_title::attr(href)'):
+        for next_page in response.css('a::attr(href)'):
             yield response.follow(next_page, self.parse)
 
 
-# previous code which prints more elements then now
 # import scrapy
 
 # class MaxChocolatierSpider(scrapy.Spider):

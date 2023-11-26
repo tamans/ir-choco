@@ -1,9 +1,13 @@
 from typing import Any, Optional
 import scrapy
+import logging
 
 class LindtChocolatierSpider(scrapy.Spider):
     name = 'lindt_spider'
-    allowed_domains = ['https://www.chocolate.lindt.com']
+    allowed_domains = ['chocolate.lindt.com']
+    # start_urls = ['http://www.chocolate.lindt.com/our-chocolate']
+    # start_urls = ['https://www.lindt.co.uk/shop']
+
 
     def __init__(self, tags=None, *args, **kwargs):
 
@@ -14,11 +18,9 @@ class LindtChocolatierSpider(scrapy.Spider):
         elif tags:
             self.tags = tags.split(',')
         else:
-            self.tags = ['/our-brands', '/gift-ideas','/type',
-                        ]
+            self.tags = ['our-brands', 'gift-ideas']
 
         self.start_urls = [f'https://www.chocolate.lindt.com/our-chocolate/{tag}' for tag in self.tags]
-
         super().__init__(**kwargs)
 
     def parse(self, response):
@@ -37,8 +39,8 @@ class LindtChocolatierSpider(scrapy.Spider):
         # Check if any relevant data is present
         if all( value for value in lindt_info.values()):
             yield lindt_info
-        # else:
-        #     logging.warning(f"Missing data for {response.url}. Skipping.")
+        else:
+            logging.warning(f"Missing data for {response.url}. Skipping.")
        
         # products = response.xpath('//*[@id="w-node-_5bb703ca-8687-69b9-7189-c26191c5fd53-f5d46110"]')  # Replace with the actual XPath for product items
 
@@ -49,10 +51,15 @@ class LindtChocolatierSpider(scrapy.Spider):
         #         'price': product.xpath('div[2]/p[1]/text()').get(),
         #     }
 
-        #     # Check if any relevant data is present
-        #     if any(product_info.values()):
-        #         yield product_info
+        # # Check if any relevant data is present
+        # if any(product_info.values()):
+        #     yield product_info
 
         # Follow links to other pages if needed
         for next_page in response.css('a.product-item-link::attr(href)'):
             yield response.follow(next_page, self.parse)
+
+        # for nxt in response.css('a.product.photo.product-item-photo::attr(href)'):
+        #     yield(response.folloow(nxt,self.parse))
+
+logging.getLogger().setLevel(logging.DEBUG)
