@@ -1,6 +1,7 @@
 import logging
 from typing import Any, Optional
 import scrapy
+import re
 from scrapy.selector import Selector
 
 class LaderachSpider(scrapy.Spider):
@@ -19,22 +20,32 @@ class LaderachSpider(scrapy.Spider):
             self.tags = ['alle-produkte', 'geschenke', 'frischschoggitm', 'pralines-truffes',
                         'tafeln','snacking','vegan', 'celebration-gifts', 'gifts-for-sharing',
                         'thank-you-gifts', 'greeting-cards']
-
-        self.start_urls = [f'https://laderach.com/ch-en/{tag}' for tag in self.tags]
+            
+        base_url = 'https://laderach.com/ch-en/'  # Use a base URL without subdomains
+        self.start_urls = [f'{base_url}{tag}' for tag in self.tags]
+        # self.start_urls = [f'https://laderach.com/ch-en/{tag}' for tag in self.tags]
 
         super().__init__(**kwargs)
         
 
     def parse(self, response):
-        # Extract information about chocolate from the webpage
+        logging.info(f"Processing page: {response.url}")
+
+        # remove extra spaces from the texts
+        cleaned_title = self.clean_text(response.css('h1::text').get() or response.css('h2::text').get() or response.css('h3::text').get());
+        cleaned_description = self.clean_text(response.css('div.product-facts::text').get() 
+                            or response.css('div.main-text::text').get() or response.css('div.category-view.container > p::text').get());
+        cleaned_ingredients = self.clean_text(self.extract_ingredients(response));
+        cleaned_allergens = self.clean_text(self.extract_additional_info(response));
+
+
         laderach_info = {
             'site': self.name,
             'page_link': response.url,  # Replace with a suitable identifier
-            'title': response.css('h1::text').get() or response.css('h2::text').get() or response.css('h3::text').get(),
-            'description': response.css('div.product-facts::text').get() 
-                            or response.css('div.main-text::text').get() or response.css('div.category-view.container > p::text').get(),
-            'ingredients': self.extract_ingredients(response),
-            'allergens': self.extract_additional_info(response),
+            'title': cleaned_title,
+            'description': cleaned_description,
+            'ingredients': cleaned_ingredients,
+            'allergens': cleaned_allergens,
             'price': response.css('span.price::text').get() or response.css('div.price-box.price-final_price').get(),
         }
 
@@ -45,8 +56,17 @@ class LaderachSpider(scrapy.Spider):
         #     logging.warning(f"Missing data for {response.url}. Skipping.")
 
         # Follow links to other pages if needed
-        for next_page in response.css('a::attr(href)'):
-            yield response.follow(next_page, self.parse)
+        # for next_page in response.css('a::attr(href)'):
+            
+        #     yield response.follow(next_page, self.parse)
+
+        for next_page in response.css('a.product-item-link::attr(href)'):
+            next_page_url = next_page.extract().strip()
+
+            if next_page_url and '/ch-en/' in next_page_url:
+                logging.info(f"Following link to: {next_page_url}")
+                yield response.follow(next_page_url, self.parse)
+
 
     # combines the underlined and normal ingredient elements
     def extract_ingredients(self, response):
@@ -67,3 +87,12 @@ class LaderachSpider(scrapy.Spider):
     def extract_additional_info(self, response):
         additional_info = response.css('span.alt-edited::text').get()
         return additional_info.strip() if additional_info else None
+    
+    def clean_text(self, raw_text: Optional[str]) -> Optional[str]:
+        """
+        Clean text by removing extra spaces, including those from line breaks.
+        """
+        if raw_text:
+            return re.sub(r'\s+', ' ', raw_text).strip()
+        else:
+            return None

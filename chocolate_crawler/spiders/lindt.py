@@ -6,7 +6,6 @@ class LindtChocolatierSpider(scrapy.Spider):
     name = 'lindt_spider'
     allowed_domains = ['chocolate.lindt.com']
     # start_urls = ['http://www.chocolate.lindt.com/our-chocolate']
-    # start_urls = ['https://www.lindt.co.uk/shop']
 
 
     def __init__(self, tags=None, *args, **kwargs):
@@ -27,12 +26,12 @@ class LindtChocolatierSpider(scrapy.Spider):
 
         lindt_info = {
             'site': self.name,
-            'page_link': response.url,  # Replace with a suitable identifier
-            'title': response.css('h1::text').get() or response.css('h2::text').get() or response.css('h3::text').get(),
-            'description': response.css('div.product.attribute.description::text').get(),
-            'ingredients': response.css('span.ingredient-label:contains("Ingredients:") + p::text').get(),
-            'allergens': response.css('span.ingredient-label.contains("Allergens:") + p::text').get(),
-            'cacao solids': response.css('span.ingredient-label.contains("Cacao Solids %") + p::text').get(),
+            'page_link': response.url,
+            'title': response.css('span.base::text').get() or response.css('h2::text').get() or response.css('h3::text').get(),
+            'description': response.css('div.value::text').get() or response.css('div.value[itemprop="description"] div[data-decoded="true"]::text').get(),
+            'ingredients': response.xpath('//td[@class="col label" and @scope="row"]/p/text()').get(),
+            'allergens': self.extract_category(response, 'Allergens:'),
+            'cacao_solids': self.extract_category(response, 'Cacao Solids %'),
             'price': response.css('span.price::text').get() or response.css('div.price-box.price-final_price').get(),
         }
 
@@ -42,24 +41,17 @@ class LindtChocolatierSpider(scrapy.Spider):
         else:
             logging.warning(f"Missing data for {response.url}. Skipping.")
        
-        # products = response.xpath('//*[@id="w-node-_5bb703ca-8687-69b9-7189-c26191c5fd53-f5d46110"]')  # Replace with the actual XPath for product items
-
-        # for product in products:
-        #     product_info = {
-        #         'name': product.xpath('a[1]/text()').get(),
-        #         'description': product.xpath('p/text()').get(),
-        #         'price': product.xpath('div[2]/p[1]/text()').get(),
-        #     }
-
-        # # Check if any relevant data is present
-        # if any(product_info.values()):
-        #     yield product_info
-
         # Follow links to other pages if needed
-        for next_page in response.css('a.product-item-link::attr(href)'):
+        # for next_page in response.css('a.product-item-link::attr(href)'):
+        for next_page in response.css('a::attr(href)'):
             yield response.follow(next_page, self.parse)
 
         # for nxt in response.css('a.product.photo.product-item-photo::attr(href)'):
         #     yield(response.folloow(nxt,self.parse))
+
+    def extract_category(self, response, category_keyword):
+        category_selector = f'span.ingredient-label:contains("{category_keyword}")'
+        p_selector = f'{category_selector} + p::text'
+        return response.css(p_selector).get()
 
 logging.getLogger().setLevel(logging.DEBUG)
