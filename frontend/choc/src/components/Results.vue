@@ -2,11 +2,15 @@
   <div>
     <div class="topnav">
       <ul class="menu">
-        <li><router-link to="/" class="link">Home</router-link></li>
         <li>
-          <router-link to="/recs" class="link">Recommendations</router-link>
+            <router-link to="/" class="link">
+            <img class="home" src="@/assets/choco.png" alt="choco" />
+            </router-link>
         </li>
-        <li><router-link to="/history" class="link">History</router-link></li>
+        <li>
+          <router-link to="/recs" class="link" style="color:#fa9ebc">Recommendations</router-link>
+        </li>
+        <li><router-link to="/history" class="link" style="color:#fa9ebc">History</router-link></li>
       </ul>
       <div class="search-container">
         <input type="text" placeholder="Search.." class="search-bar" />
@@ -60,15 +64,27 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
+div {
+    font-family: "Lucida Console", Courier, monospace;
+}
 * {
   margin: 0;
   padding: 0;
 }
 
+
+
+.link {
+  color: #6b1f2d; 
+  text-decoration: none; 
+  margin-left: 3vh;
+}
+
 .topnav {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   padding: 10px;
 }
 
@@ -86,6 +102,7 @@ ul {
 .menu {
   list-style: none;
   display: flex;
+  align-items: flex-end;
 }
 
 .menu li {
@@ -116,11 +133,18 @@ ul {
 
 .search-bar {
   width: 50vh;
-  height: 3vh;
+  height: 5vh;
   border-radius: 15px;
   padding: 5px 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #fa9ebc;
+  background-color: #ffdbd1;
+  color: #fa9ebc;
+}
+
+.search-bar:focus {
+  background-color: #fa9ebc;
+  color: #ffdbd1;
 }
 
 .results-column {
@@ -133,9 +157,15 @@ ul {
 }
 
 .result-box {
-  border: 1px solid #ccc;
+  border: 1px solid #fa9ebc;
   padding: 10px;
   border-radius: 10px;
-  background-color: #f9f9f9;
+  background-color: #ffdbd1;
+}
+
+.home {
+  width: 8vh;
+  height: 6vh;
+  transform: rotate(-45deg); 
 }
 </style>
