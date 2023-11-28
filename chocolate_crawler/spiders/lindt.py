@@ -5,8 +5,6 @@ import logging
 class LindtChocolatierSpider(scrapy.Spider):
     name = 'lindt_spider'
     allowed_domains = ['chocolate.lindt.com']
-    # start_urls = ['http://www.chocolate.lindt.com/our-chocolate']
-
 
     def __init__(self, tags=None, *args, **kwargs):
 

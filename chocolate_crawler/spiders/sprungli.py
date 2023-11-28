@@ -30,7 +30,7 @@ class SprungliSpider(scrapy.Spider):
 
         page_info = {
             'site': self.name,
-            'docno': response.url,
+            'page_link': response.url,
             'title': response.css('title::text').get(),
             'description': cleaned_description,
             'ingredients': cleaned_ingredients,
@@ -44,11 +44,6 @@ class SprungliSpider(scrapy.Spider):
         # Follow links to other pages if needed
         for next_page in response.css('a.caption::attr(href)').getall():
             yield response.follow(next_page, self.parse)
-        # for next_page in response.css('a.caption::attr(href)'):
-        #     next_page_url = response.urljoin(next_page.extract().strip())
-
-        # if next_page_url and next_page_url != '#':
-        #     yield response.follow(next_page_url, self.parse)
 
     
     def clean_text(self, raw_text: Optional[str]) -> Optional[str]:

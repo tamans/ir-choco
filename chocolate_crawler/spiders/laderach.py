@@ -1,32 +1,30 @@
-import logging
 from typing import Any, Optional
 import scrapy
 import re
-from scrapy.selector import Selector
+import logging
 
 class LaderachSpider(scrapy.Spider):
     name = 'laderach_spider'
     allowed_domains = ['laderach.com']
-    
-    def __init__(self, tags=None, *args, **kwargs):
 
-        self.start_urls = []
+    def start_requests(self):
+        # Initial page
+        yield scrapy.Request(url='https://laderach.com/ch-en/alle-produkte', callback=self.parse)
 
-        if tags == 'null':
-            self.tags = []
-        elif tags:
-            self.tags = tags.split(',')
-        else:
-            self.tags = ['alle-produkte', 'geschenke', 'frischschoggitm', 'pralines-truffes',
-                        'tafeln','snacking','vegan', 'celebration-gifts', 'gifts-for-sharing',
-                        'thank-you-gifts', 'greeting-cards']
-            
-        base_url = 'https://laderach.com/ch-en/'  # Use a base URL without subdomains
-        self.start_urls = [f'{base_url}{tag}' for tag in self.tags]
-        # self.start_urls = [f'https://laderach.com/ch-en/{tag}' for tag in self.tags]
+        # Subsequent pages
+        start_page = 2
+        end_page = 10  # Adjust the end page number as needed
+        base_url = 'https://laderach.com/ch-en/alle-produkte?p={}'
+        for page_number in range(start_page, end_page + 1):
+            url = base_url.format(page_number)
+            yield scrapy.Request(url=url, callback=self.parse)
 
-        super().__init__(**kwargs)
-        
+    # def parse(self, response):
+    #     # Extract information from the current page
+    #     product_links = response.css('a.product-item-link::attr(href)').extract()
+
+    #     for product_link in product_links:
+    #         yield scrapy.Request(url=product_link, callback=self.parse_product)
 
     def parse(self, response):
         logging.info(f"Processing page: {response.url}")
@@ -52,21 +50,13 @@ class LaderachSpider(scrapy.Spider):
         # Check if any relevant data is present
         if all( value for value in laderach_info.values()):
             yield laderach_info
-        # else:
-        #     logging.warning(f"Missing data for {response.url}. Skipping.")
-
-        # Follow links to other pages if needed
-        # for next_page in response.css('a::attr(href)'):
-            
-        #     yield response.follow(next_page, self.parse)
 
         for next_page in response.css('a.product-item-link::attr(href)'):
-            next_page_url = next_page.extract().strip()
+            # next_page_url = next_page.extract().strip()
 
-            if next_page_url and '/ch-en/' in next_page_url:
-                logging.info(f"Following link to: {next_page_url}")
-                yield response.follow(next_page_url, self.parse)
-
+            # if next_page_url and '/ch-en/' in next_page_url:
+            #     logging.info(f"Following link to: {next_page_url}")
+            yield response.follow(next_page, self.parse)
 
     # combines the underlined and normal ingredient elements
     def extract_ingredients(self, response):
