@@ -31,57 +31,30 @@ for json_file in json_files:
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON in {json_path}: {e}")
 
-# print("Loaded data:")
-# print(all_data)
-
-# Extract relevant information
-# texts = [
-#     (item.get('description', '') if item.get('description', '') else '') + ' ' + 
-#     (item.get('ingredients', '') if item.get('ingredients', '') else '') + ' ' + 
-#     (item.get('allergens', '') if item.get('allergens', '') else '') + ' ' +
-#     (item.get('price', '') if item.get('price', '') else '')
-#     for item in all_data
-# ]
-
-# Extract relevant information
-# texts = [
-#     ' '.join(filter(None, [
-#         item.get('description', ''),
-#         item.get('ingredients', ''),
-#         item.get('allergens', ''),
-#         item.get('price', '')
-#     ]))
-#     for item in all_data
-# ]
-
-# Extract relevant information
-texts = [
-    ' '.join(filter(None, [
-        item.get('description', ''),
-        item.get('ingredients', ''),
-        item.get('allergens', ''),
-        item.get('price', '')
-    ]))
-    for item in all_data
-]
-
 # Create an index
-idx = ['d' + str(i + 1) for i in range(len(texts))]
+idx = ['d' + str(i + 1) for i in range(len(all_data))]
+
+# Extract relevant information
+titles = [item.get('title', '') for item in all_data]
+descriptions = [item.get('description', '') for item in all_data]
+ingredients = [item.get('ingredients', '') for item in all_data]
+allergens = [item.get('allergens', '') for item in all_data]
+prices = [item.get('price', '') for item in all_data]
 
 # Create a DataFrame
-docs_df = pd.DataFrame(np.column_stack((idx, texts)), columns=['docno', 'text'])
-# print(docs_df)
+docs_df = pd.DataFrame(np.column_stack((idx, titles, descriptions, ingredients, allergens, prices)),
+                       columns=['docno', 'title', 'description', 'ingredients', 'allergens', 'price'])
+
+# Print the DataFrame
+print(docs_df)
 
 # Specify the index path relative to the script location
 index_path = os.path.abspath("./index")
 print(index_path)
 
-# indexer = pt.DFIndexer(index_path, overwrite=True)
-# index_ref = indexer.index(docs_df["text"], docs_df["docno"])
-# index_ref.toString()
-
-# Create a DataFrame
-# docs_df = pd.DataFrame(np.column_stack((range(1, len(texts) + 1), texts)), columns=['docno', 'text'])
+indexer = pt.DFIndexer(index_path, overwrite=True)
+index_ref = indexer.index(docs_df["text"], docs_df["docno"])
+index_ref.toString()
 
 # Save DataFrame to a TREC-style file
 # saves the indexing in the file
@@ -91,12 +64,12 @@ docs_df.to_csv(trec_file_path, sep='\t', header=False, index=False)
 
 
 # Create a PyTerrier DFIndexer 
-indexer = pt.DFIndexer(index_path, overwrite=True)
+# indexer = pt.DFIndexer(index_path, overwrite=True)
 # indexer = pt.TRECCollectionIndexer(trec_file_path, verbose=True, blocks=False)
 # indexer = pt.FilesIndexer("./index", verbose=True, blocks=False)
 
 # Index the DataFrame
-# index_ref = indexer.index(docs_df["text"], docs_df["docno"])
+index_ref = indexer.index(docs_df["text"], docs_df["docno"])
 
 # Display the index reference
 # print(index_ref.toString())
