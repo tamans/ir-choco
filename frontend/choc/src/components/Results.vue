@@ -47,6 +47,9 @@ export default defineComponent({
   name: "ResultsView",
   setup() {
     const router = useRouter();
+    //const searchQuery = ref("");
+   // const searchResults = ref([]);
+
     const isSearchRoute = computed(
       () => router.currentRoute.value.path === "/"
     );
@@ -55,7 +58,13 @@ export default defineComponent({
       router.push({ name: "ItemSearch" });
     };
 
+    // const peformSearch = () => {
+    //   searchResults.value = fetchSearchResults(searchQuery.value);
+    // }
     return {
+      // searchQuery,
+      // searchResults,
+      // peformSearch,
       isSearchRoute,
       navigateToItemSearch,
     };

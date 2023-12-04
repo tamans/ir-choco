@@ -7,10 +7,12 @@
         </router-link>
       </div>
       <div class="search-container">
-        <input type="text" placeholder="Search.." class="search-bar" />
-        <a href="#">
-          <i class="fas fa-search"></i>
-        </a>
+        <form role="search" class= "search-bar" id="form">
+        <input type="search" id="query" name="q" placeholder="Search..." aria-label="Search through site content">
+          <button>
+            <img src="@/assets/icons8-search.gif" alt="search">
+          </button>
+          </form>
       </div>
     </div>
   </div>
@@ -37,13 +39,29 @@ export default defineComponent({
       navigateToItemSearch,
     };
   },
+
+  mounted() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+    console.log('Query:', query);
+
+    fetch(`http://127.0.0.1:8000/get-chocolates/?q=${query}`)
+    .then(response => response.json())
+    .then(data => {
+      
+      console.log('Backend response:', data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+  }
 });
 </script>
 
 <style scoped>
-
 div {
-    font-family: "Lucida Console", Courier, monospace;
+  font-family: "Lucida Console", Courier, monospace;
 }
 * {
   margin: 0;
@@ -61,12 +79,12 @@ div {
   margin-bottom: 10px; /* Add margin as needed */
 }
 
-.search-container {
+form {
   display: flex;
   align-items: center;
 }
 
-.search-bar {
+input {
   width: 50vh;
   height: 5vh;
   border-radius: 15px;
@@ -77,7 +95,7 @@ div {
   color: #fa9ebc;
 }
 
-.search-bar:focus {
+input:focus {
   background-color: #fa9ebc;
   color: #ffdbd1;
 }
@@ -87,5 +105,12 @@ div {
   height: 40.5vh;
   transform: rotate(-45deg);
   padding: 10vh;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
 }
 </style>

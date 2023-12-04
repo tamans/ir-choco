@@ -13,9 +13,11 @@ Backend
 
 If you change anything in the models you have to run 
 
- python manage.py
+python manage.py
 
+Start server:
 ./manage.py runserver
+
 ./manage.py makemigrations
 ./manage.py migrate     
 
