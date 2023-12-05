@@ -1,41 +1,27 @@
-# import os
-from django.shortcuts import render
-from django.http import HttpResponse
-# import os
-# import sys
+# views.py
+from django.http import JsonResponse
+from .models import Chocolate
+from chocoFinder.Indexing.index_num import create_index_and_search  # Adjust the import path
 
-# # Get the current script's directory
-# current_dir = os.path.dirname(os.path.abspath(__file__))
+def index_and_search_chocolates(request, query):
+    # Run the indexing script to create an index and search
+    search_results = create_index_and_search(query)
 
-# # Construct the path to Indexing directory
-# indexing_dir = os.path.join(current_dir, '..', 'Indexing')
-# indx = os.path.abspath('../.././Indexing')
-# print("@@@index:",indx)
+    # Save the search results to the Chocolate model
+    chocolates = []
+    for doc in search_results.scoredDocuments:
+        chocolate = Chocolate(
+            docno=doc.get("docno", ""),
+            title=doc.get("title", ""),
+            description=doc.get("description", ""),
+            ingredients=doc.get("ingredients", ""),
+            allergens=doc.get("allergens", ""),
+            price=doc.get("price", ""),
+        )
+        chocolates.append(chocolate)
 
-# # Add the Indexing directory to sys.path
-# # sys.path.append(indx)
-# # print("hell",sys.path)
+    # Bulk insert the records into the database
+    Chocolate.objects.bulk_create(chocolates)
 
-# # Get the absolute path to the package directory
-# package_path = os.path.abspath('../.././Indexing')
-
-# # Add the package directory to the Python path
-# sys.path.append(package_path)
-
-# # Now you can import index_num.py
-# # from index_num import create_index_and_search
-# # from ....Indexing.index_num import create_index_and_search
-# from .models import Chocolate
-# from Indexing import index_num
-# import csv
-
-# def search_view(request):
-#     if request.method == 'GET':
-#         query = request.GET.get('q', '')
-
-#         # Call the create_index_and_search function with the appropriate parameters
-#         search_results = index_num.create_index_and_search(query)
-
-#         # Assuming you have a template for displaying search results (e.g., search_results.html)
-#         context = {'results': search_results, 'query': query}
-#         return render(request, 'Results.vue', context)
+    # Return the search results as a JsonResponse
+    return JsonResponse({"results": search_results.results, "chocolates": chocolates})

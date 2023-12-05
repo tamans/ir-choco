@@ -22,6 +22,8 @@
 import { defineComponent, computed } from "vue";
 import { useRouter } from "vue-router";
 
+
+
 export default defineComponent({
   name: "SearchView",
   setup() {
@@ -40,22 +42,30 @@ export default defineComponent({
     };
   },
 
-  mounted() {
+  methods: {
+  async fetchData() {
     const urlParams = new URLSearchParams(window.location.search);
     const query = urlParams.get('q');
     console.log('Query:', query);
 
-    fetch(`http://127.0.0.1:8000/get-chocolates/?q=${query}`)
-    .then(response => response.json())
-    .then(data => {
-      
-      console.log('Backend response:', data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+    try {
+      await this.$store.dispatch('fetchChoco', query);
+      const chocolates = this.$store.getters.getChocolate;
+      console.log('Chocolates:', chocolates);
 
-  }
+      // Assuming you have an array available, e.g., this.array
+      // await this.$store.dispatch('fetchRecs', this.array);
+      // const recs = this.$store.getters.getRecs;
+      // console.log('Recs:', recs);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  },
+},
+
+  mounted() {
+    this.fetchData();
+  },
 });
 </script>
 

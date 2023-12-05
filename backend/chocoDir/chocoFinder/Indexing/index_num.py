@@ -12,6 +12,7 @@ def initialize_terrier():
     import ssl
     ssl._create_default_https_context = ssl.create_default_context
 
+
 def load_data_from_json(data_dir, json_files):
     all_data = []
     for json_file in json_files:

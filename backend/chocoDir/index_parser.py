@@ -9,6 +9,7 @@ django.setup()
 from chocoFinder.models.chocolate import Chocolate
 
 csv_file_path = os.path.abspath('./../../Indexing/index/chocolate.csv') 
+print(csv_file_path)
 chocolates = []
 
 Chocolate.objects.all().delete()  

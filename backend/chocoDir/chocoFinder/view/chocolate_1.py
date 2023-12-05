@@ -4,11 +4,7 @@ from ..models import Chocolate
 import requests
 
 def get_choco(request, query):
-    # Fetch or obtain the JSON response containing 'docno' values
-    # For example, assuming you have a URL that provides the JSON response:
-    json_url = 'http://example.com/your_json_endpoint'
-    json_response = requests.get(json_url).json()
-
+    
     # Initialize the chocolates list
     chocolates = []
 
