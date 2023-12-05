@@ -12,6 +12,5 @@ class Chocolate(models.Model):
     allergens = models.JSONField(default=list)
     price = models.CharField(max_length=20)
 
-
-def __str__(self):
-    return self.title
+    def __str__(self):
+        return self.title

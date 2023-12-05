@@ -13,6 +13,7 @@ def initialize_terrier():
     ssl._create_default_https_context = ssl.create_default_context
 
 
+
 def load_data_from_json(data_dir, json_files):
     all_data = []
     for json_file in json_files:
@@ -35,8 +36,12 @@ def load_data_from_json(data_dir, json_files):
 index_path = os.path.abspath('./Indexing/index')
 save_path = os.path.abspath('./Indexing/index/choco.csv')
 
+
+"""
+indexing the query
+"""
 def create_index_and_search(query):
-    data_dir = os.path.abspath("././chocolate_crawler/Crawled/")
+    data_dir = os.path.abspath("./../../chocolate_crawler/Crawled/")
     json_files = ['laderach.json', 'spruengli.json', 'maxchocolatier.json']
     
     initialize_terrier()

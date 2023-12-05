@@ -8,7 +8,7 @@ django.setup()
 
 from chocoFinder.models.chocolate import Chocolate
 
-csv_file_path = os.path.abspath('./../../Indexing/index/chocolate.csv') 
+csv_file_path = os.path.abspath('./backend/chocoDir/chocoFinder/Indexing/index/choco.csv') 
 print(csv_file_path)
 chocolates = []
 

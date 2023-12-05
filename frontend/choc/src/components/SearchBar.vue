@@ -50,10 +50,11 @@ export default defineComponent({
 
     try {
       await this.$store.dispatch('fetchChoco', query);
+      console.log("here");
       const chocolates = this.$store.getters.getChocolate;
       console.log('Chocolates:', chocolates);
 
-      // Assuming you have an array available, e.g., this.array
+    
       // await this.$store.dispatch('fetchRecs', this.array);
       // const recs = this.$store.getters.getRecs;
       // console.log('Recs:', recs);
@@ -64,7 +65,9 @@ export default defineComponent({
 },
 
   mounted() {
+    console.log("mounting???")
     this.fetchData();
+    console.log("mounted")
   },
 });
 </script>

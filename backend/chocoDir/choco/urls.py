@@ -29,9 +29,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("chocoFinder.urls")),
-    # path('get-chocolates/', get_choco, name='get_chocolates'),
-    # path('search/', search_view, name='search_view'),
-    # path('get-chocolates/', search_view, name='get_chocolates'),
+
 ]
 
 vue3_routes = []
@@ -39,7 +37,6 @@ if settings.DEBUG:
     vue3_routes += [
         ("vue3-root", "")
     ]
-
 
 for name, route in vue3_routes:
     urlpatterns.append(path(route, TemplateView.as_view(template_name="vite-index.html"), name=name))
