@@ -21,7 +21,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
-from backend.chocoDir.chocoFinder.views import search_view
+
+from chocoFinder.views import search_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -29,7 +30,7 @@ urlpatterns = [
     path('search/', search_view, name='search_view'),
     path('get-chocolates/', search_view, name='get_chocolates'),
 ]
-]
+
 vue3_routes = []
 if settings.DEBUG:
     vue3_routes += [

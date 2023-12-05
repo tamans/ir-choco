@@ -34,48 +34,6 @@ def load_data_from_json(data_dir, json_files):
 index_path = os.path.abspath('./Indexing/index')
 save_path = os.path.abspath('./Indexing/index/choco.csv')
 
-# def create_index_and_search(data_dir, json_files, query):
-#     initialize_terrier()
-
-#     all_data = load_data_from_json(data_dir, json_files)
-
-#     # Create an index
-#     idx = ['d' + str(i + 1) for i in range(len(all_data))]
-
-#     # Extract relevant information
-#     titles = [item.get('title', '') for item in all_data]
-#     descriptions = [item.get('description', '') for item in all_data]
-#     ingredients = [item.get('ingredients', '') for item in all_data]
-#     allergens = [item.get('allergens', '') for item in all_data]
-#     prices = [item.get('price', '') for item in all_data]
-
-#     # Create a DataFrame
-#     docs_df = pd.DataFrame(np.column_stack((idx, titles, descriptions, ingredients, allergens, prices)),
-#                            columns=['docno', 'title', 'description', 'ingredients', 'allergens', 'price'])
-
-#     docs_df.to_csv(save_path, index=False)
-
-#     indexer = pt.DFIndexer(index_path, overwrite=True)
-#     index_ref = indexer.index(docs_df["description"], docs_df["docno"])
-
-#     index = pt.IndexFactory.of(index_ref)
-
-#     print(index.getCollectionStatistics().toString())
-
-#     br = pt.BatchRetrieve(index, wmodel="BM25")  # Alternative Models: "TF_IDF", "BM25"
-#     results = br.search(query)
-    
-#     return results
-
-# # Example usage
-# data_dir = os.path.abspath("././chocolate_crawler/Crawled/")
-# json_files = ['laderach.json', 'spruengli.json', 'maxchocolatier.json']
-# query = "white chocolate CHF 20"
-
-# search_results = create_index_and_search(data_dir, json_files, query)
-# print(search_results)
-
-
 def create_index_and_search(query):
     data_dir = os.path.abspath("./../chocolate_crawler/Crawled/")
     json_files = ['laderach.json', 'spruengli.json', 'maxchocolatier.json']
