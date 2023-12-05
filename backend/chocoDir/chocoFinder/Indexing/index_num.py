@@ -79,6 +79,6 @@ def create_index_and_search(query):
     return results
 
 # Example usage
-query = "white chocolate CHF 20"
-search_results = create_index_and_search(query)
-print(search_results)
+# query = "white chocolate CHF 20"
+# search_results = create_index_and_search(query)
+# print(search_results)
