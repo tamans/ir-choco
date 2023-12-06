@@ -7,10 +7,10 @@ export default createStore({
         recs: [],
     },
     mutations: {
-        SET_CHOCOLATE(state, chocolate) {
+        setChocolate(state, chocolate) {
             state.chocolate = chocolate;
         },
-        SET_RECS(state, recs) {
+        setRecs(state, recs) {
             state.recs = recs;
         }
     },
@@ -18,9 +18,16 @@ export default createStore({
     actions: {
         async fetchChoco({ commit }, query) {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/chocolate/get-choco/${query}/`);
-                const data = await response.json();
-                commit('SET_CHOCOLATE', data.documents);
+                const response = await fetch(`http://127.0.0.1:8000/api/chocolate/get-choco/${query}/`, {
+                    redirect: "manual",
+                    credentials: "include"
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch projects');
+                }
+                const chocolate = await response.json();
+                commit('setChocolate', chocolate);
+                return chocolate;
             } catch (error) {
                 console.error('Error fetching chocolates:', error);
             }
@@ -29,7 +36,7 @@ export default createStore({
 
     async fetchRecs({ commit }, array) {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api//chocolate/choco/get-recs/`, {
+            const response = await fetch('http://127.0.0.1:8000/api/chocolate/choco/get-recs/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,7 +44,7 @@ export default createStore({
                 body: JSON.stringify({ array }),
             });
             const data = await response.json();
-            commit('SET_RECS', data.recs);
+            commit('setRecs', data.recs);
         } catch (error) {
             console.error('Error fetching recs:', error);
             throw error;

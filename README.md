@@ -25,3 +25,6 @@ Start server:
 chocoDir
 export DJANGO_SETTINGS_MODULE=choco.settings
 python3 index_parser.py
+
+if in Backend chocoDir, ModuleNotFoundError: No module named 'corsheaders'
+pip install django-cors-headers

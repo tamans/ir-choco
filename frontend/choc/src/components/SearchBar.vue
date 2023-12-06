@@ -7,12 +7,18 @@
         </router-link>
       </div>
       <div class="search-container">
-        <form role="search" class= "search-bar" id="form">
-        <input type="search" id="query" name="q" placeholder="Search..." aria-label="Search through site content">
-          <button>
-            <img src="@/assets/icons8-search.gif" alt="search">
+        <form role="search" class="search-bar" id="form">
+          <input
+            type="search"
+            id="query"
+            name="q"
+            placeholder="Search..."
+            aria-label="Search through site content"
+          />
+          <button type="submit">
+            <i class="fa fa-search" style="font-size: 18px"> </i>
           </button>
-          </form>
+        </form>
       </div>
     </div>
   </div>
@@ -21,8 +27,6 @@
 <script>
 import { defineComponent, computed } from "vue";
 import { useRouter } from "vue-router";
-
-
 
 export default defineComponent({
   name: "SearchView",
@@ -43,31 +47,30 @@ export default defineComponent({
   },
 
   methods: {
-  async fetchData() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const query = urlParams.get('q');
-    console.log('Query:', query);
+    async fetchData() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const query = urlParams.get("q");
+      console.log("Query:", query);
 
-    try {
-      await this.$store.dispatch('fetchChoco', query);
-      console.log("here");
-      const chocolates = this.$store.getters.getChocolate;
-      console.log('Chocolates:', chocolates);
+      try {
+        await this.$store.dispatch("fetchChoco", query);
+        console.log("here");
+        const chocolates = this.$store.getters.getChocolate;
+        console.log("Chocolates:", chocolates);
 
-    
-      // await this.$store.dispatch('fetchRecs', this.array);
-      // const recs = this.$store.getters.getRecs;
-      // console.log('Recs:', recs);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+        // await this.$store.dispatch('fetchRecs', this.array);
+        // const recs = this.$store.getters.getRecs;
+        // console.log('Recs:', recs);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    },
   },
-},
 
   mounted() {
-    console.log("mounting???")
+    console.log("mounting???");
     this.fetchData();
-    console.log("mounted")
+    console.log("mounted");
   },
 });
 </script>
@@ -88,13 +91,21 @@ div {
   justify-content: center;
 }
 
-.logo-container {
-  margin-bottom: 10px; /* Add margin as needed */
-}
 
 form {
   display: flex;
   align-items: center;
+}
+
+form{
+
+   width: 50vh;
+  height: 5vh;
+  border-radius: 15px;
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 1px solid #fa9ebc;
+  background-color: #ffdbd1;
 }
 
 input {
@@ -103,12 +114,12 @@ input {
   border-radius: 15px;
   padding: 5px 10px;
   font-size: 16px;
-  border: 1px solid #fa9ebc;
   background-color: #ffdbd1;
+  border: 1px solid transparent;
   color: #fa9ebc;
 }
 
-input:focus {
+form:focus {
   background-color: #fa9ebc;
   color: #ffdbd1;
 }
@@ -120,10 +131,10 @@ input:focus {
   padding: 10vh;
 }
 
-button {
-  all: unset;
-  cursor: pointer;
-  width: 44px;
-  height: 44px;
+button{
+  
+  background-color: #ffdbd1;
+  border: 1px solid transparent;
 }
+
 </style>

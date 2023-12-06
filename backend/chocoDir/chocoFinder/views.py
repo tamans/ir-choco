@@ -42,24 +42,8 @@ def index_and_search_chocolates(request, query):
         print(url)
         response = requests.get(url)
         response.raise_for_status()
-        # with open('ArtFinderSale/views/final_result.json', 'r') as json_file:
-        #     data = json.load(json_file)
-        #
-        # # Assuming the JSON structure is a list of dictionaries
-        # for row in data:
-        #
-        #     new_document = Document(
-        #         image=row['img'],
-        #         author=row['author'],
-        #         title=row['title'],
-        #         description=row['description'],
-        #         price=row['price'],
-        #         tags=row['tags'],
-        #         url=row['url'],
-        #         docno = row['docno']
-        #     )
-        #     new_document.save()
-
+        
+    
         json_response = response.json()
 
 
