@@ -19,8 +19,8 @@ export default createStore({
         async fetchChoco({ commit }, query) {
             try {
                 const response = await fetch(`http://127.0.0.1:8000/api/chocolate/get-choco/${query}/`, {
-                    redirect: "manual",
-                    credentials: "include"
+                    method: 'GET',
+                    credentials: 'include',
                 });
                 if (!response.ok) {
                     throw new Error('Failed to fetch projects');

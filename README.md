@@ -15,6 +15,14 @@ Authors:
 scrapy crawl name_spider -o name.json
 ```
 
+# Frontend 
+
+If you have problems starting the frontend do 
+
+```
+yarn add --dev @vue/cli
+```
+
 # Backend
 
 If you change anything in the models you have to run 

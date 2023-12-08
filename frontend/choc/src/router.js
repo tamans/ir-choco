@@ -1,6 +1,7 @@
-import Search from "./components/SearchBar.vue"
-import Results from "./components/Results.vue"
-import Recs from "./components/Recs.vue"
+import Search from "./Views/SearchView.vue"
+import Results from "./Views/ResultsView.vue"
+// import Recs from "./components/Recs.vue"
+// import Bar from "./components/Bar.vue"
 
 
 
@@ -17,11 +18,7 @@ const routes = [
     component: Results,
     path: '/results', 
   },
-  {
-    name: 'Recs',
-    component: Recs,
-    path: '/recs', 
-  },
+  
 ];
 
 const router = createRouter({

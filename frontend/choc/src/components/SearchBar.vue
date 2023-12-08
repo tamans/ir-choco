@@ -91,6 +91,15 @@ div {
   justify-content: center;
 }
 
+.search-container{
+  width: 100%;
+  min-height: 100vh;
+  padding: 5%;
+  background-image: linear-gradient(rgba(230, 182, 229, 0.9), rgba(234, 127, 228, 0.9));
+  background-position: center;
+  background-size: cover;
+}
+
 
 form {
   display: flex;
