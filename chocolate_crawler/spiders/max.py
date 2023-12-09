@@ -27,6 +27,7 @@ class MaxChocolatier(scrapy.Spider):
             'site': self.name,
             'page_link': response.url,
             'title': response.css('h1::text').get(),
+            'img_link': response.css('img.pdp__product_img_open::attr(src)').get(),
             'description': description,
             'ingredients': ingredients,
             'price': response.css('p.pdp__price::text').get()
@@ -36,9 +37,7 @@ class MaxChocolatier(scrapy.Spider):
             yield max_info
         else:
             logging.warning(f"Missing data for {response.url}. Skipping.")
-        # response.css('a.pop__product_card_title::attr(href)').extract()
-        # response.xpath('//a[@class="pop__product_card_title"]/@href').extract()
-        # for next_page in response.css('a.pop__product_card_title::attr(href)'):
+            
         for next_page in response.css('a::attr(href)').getall():
             print(next_page)
             yield response.follow(next_page, self.parse)

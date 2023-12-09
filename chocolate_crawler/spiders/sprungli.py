@@ -32,6 +32,7 @@ class SprungliSpider(scrapy.Spider):
             'site': self.name,
             'page_link': response.url,
             'title': response.css('title::text').get(),
+            'img_link': response.css('a.thumbnail.large-thumbnail img::attr(src)').get(),
             'description': cleaned_description,
             'ingredients': cleaned_ingredients,
             'price': cleaned_price,

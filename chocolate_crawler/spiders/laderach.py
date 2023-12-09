@@ -19,13 +19,6 @@ class LaderachSpider(scrapy.Spider):
             url = base_url.format(page_number)
             yield scrapy.Request(url=url, callback=self.parse)
 
-    # def parse(self, response):
-    #     # Extract information from the current page
-    #     product_links = response.css('a.product-item-link::attr(href)').extract()
-
-    #     for product_link in product_links:
-    #         yield scrapy.Request(url=product_link, callback=self.parse_product)
-
     def parse(self, response):
         logging.info(f"Processing page: {response.url}")
 
@@ -41,6 +34,7 @@ class LaderachSpider(scrapy.Spider):
             'site': self.name,
             'page_link': response.url,  # Replace with a suitable identifier
             'title': cleaned_title,
+            'img_link': response.css('img.product-image-photo::attr(src)').getall(),
             'description': cleaned_description,
             'ingredients': cleaned_ingredients,
             'allergens': cleaned_allergens,
@@ -52,10 +46,6 @@ class LaderachSpider(scrapy.Spider):
             yield laderach_info
 
         for next_page in response.css('a.product-item-link::attr(href)'):
-            # next_page_url = next_page.extract().strip()
-
-            # if next_page_url and '/ch-en/' in next_page_url:
-            #     logging.info(f"Following link to: {next_page_url}")
             yield response.follow(next_page, self.parse)
 
     # combines the underlined and normal ingredient elements
