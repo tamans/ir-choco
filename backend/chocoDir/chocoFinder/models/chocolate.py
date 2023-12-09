@@ -7,6 +7,7 @@ class Chocolate(models.Model):
     docno = models.CharField(max_length=255, unique=True)
     site = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
+    image = models.CharField(max_length=list)
     description = models.CharField(max_length=1000)
     ingredients = models.JSONField(default=list)
     allergens = models.JSONField(default=list)

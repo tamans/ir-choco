@@ -12,8 +12,6 @@ def initialize_terrier():
     import ssl
     ssl._create_default_https_context = ssl.create_default_context
 
-
-
 def load_data_from_json(data_dir, json_files):
     all_data = []
     for json_file in json_files:
@@ -33,7 +31,7 @@ def load_data_from_json(data_dir, json_files):
     return all_data
 
 
-index_path = os.path.abspath('./Indexing/index')
+index_path = os.path.abspath('./index')
 save_path = os.path.abspath('./Indexing/index/choco.csv')
 
 
@@ -41,7 +39,7 @@ save_path = os.path.abspath('./Indexing/index/choco.csv')
 indexing the query
 """
 def create_index_and_search(query):
-    data_dir = os.path.abspath("./../../chocolate_crawler/Crawled/")
+    data_dir = os.path.abspath("../../../chocolate_crawler/Crawled/")
     json_files = ['laderach.json', 'spruengli.json', 'maxchocolatier.json']
     
     initialize_terrier()
@@ -53,18 +51,31 @@ def create_index_and_search(query):
 
     # Extract relevant information
     titles = [item.get('title', '') for item in all_data]
+    image = [item.get('img_link', '') for item in all_data]
     descriptions = [item.get('description', '') for item in all_data]
     ingredients = [item.get('ingredients', '') for item in all_data]
     allergens = [item.get('allergens', '') for item in all_data]
     prices = [item.get('price', '') for item in all_data]
 
     # Create a DataFrame
-    docs_df = pd.DataFrame(np.column_stack((idx, titles, descriptions, ingredients, allergens, prices)),
-                           columns=['docno', 'title', 'description', 'ingredients', 'allergens', 'price'])
+    docs_dict = {
+        'docno': idx,
+        'title': titles,
+        'img_link': image,
+        'description': descriptions,
+        'ingredients': ingredients,
+        'allergens': allergens,
+        'price': prices
+    }
+    # docs_df = pd.DataFrame(np.column_stack((idx, titles, image, descriptions, ingredients, allergens, prices)),
+    #                        columns=['docno', 'title', 'img_link','description', 'ingredients', 'allergens', 'price'])
 
-    # save_path = os.path.abspath('./index/choco.csv')
+    
+    docs_df = pd.DataFrame(docs_dict)
+    save_path = os.path.abspath('./index/chocolate.csv')
     # print(save_path)
     # docs_df.to_csv(save_path, index=False)
+    # docs_df.to_json(save_path, index=False)
 
     indexer = pt.DFIndexer(index_path, overwrite=True)
     index_ref = indexer.index(docs_df["description"], docs_df["docno"])
@@ -78,7 +89,16 @@ def create_index_and_search(query):
     
     return results
 
+def search(query: str):
+    print(query)
+    # indexer = pt.DFIndexer(index_path, overwrite=True)
+    # index_ref = indexer.index(docs_df["description"], docs_df["docno"])
+    index = pt.IndexFactory.of('./index/chocolate.csv')
+    BM25 = pt.BatchRetrieve(index, wmodel='BM25')
+    output = BM25.search(query)
+    return output.to_dict()
+
 # Example usage
-# query = "white chocolate CHF 20"
-# search_results = create_index_and_search(query)
-# print(search_results)
+query = "white chocolate CHF 20"
+search_results = create_index_and_search(query)
+print(search_results)

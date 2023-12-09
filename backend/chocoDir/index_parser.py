@@ -21,6 +21,7 @@ with open(csv_file_path, 'r') as csv_file:
         chocolate = Chocolate(
             docno=row['docno'],
             title=row['title'],
+            image=row['img_link'],
             description=row['description'],
             ingredients=row['ingredients'],
             allergens=row['allergens'],
