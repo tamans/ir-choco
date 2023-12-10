@@ -2,10 +2,11 @@
   <div class="menu-container">
     <!-- Image on the top left -->
     <div class="image-container">
-      <img class="choco" src="@/assets/choco.png" alt="choco" />
+      <router-link to="/" class="link">
+        <img class="choco" src="@/assets/choco.png" alt="choco" />
+      </router-link>
     </div>
 
-    <!-- Component Bar on the top right -->
     <div class="bar-container">
       <Bar />
     </div>
@@ -13,8 +14,8 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import Bar from '@/components/Bar.vue';
+import { defineComponent } from "vue";
+import Bar from "@/components/Bar.vue";
 
 export default defineComponent({
   name: "MenuView",
@@ -30,17 +31,14 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: transparent; 
+  background-color: transparent;
   margin-top: 4vh;
 }
 
-
-
 .choco {
-  width: 15vh;
-  height: 11.5vh;
-  transform: rotate(-45deg); 
+  width: 20vh;
+  height: 15.5vh;
+  transform: rotate(-45deg);
   margin-right: 115vh;
 }
-
 </style>

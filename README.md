@@ -34,7 +34,6 @@ python3 manage.py
 ```
 Start server:
 ./manage.py runserver
-
 ./manage.py makemigrations
 ./manage.py migrate
 ```

@@ -42,13 +42,6 @@ div {
   padding: 0;
 }
 
-.topnav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .search-container{
   width: 100%;
   background-position: center;

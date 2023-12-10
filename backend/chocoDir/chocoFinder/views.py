@@ -34,7 +34,6 @@ def index_and_search_chocolates(request, query):
 
 
     IP = "http://localhost:8000"
-    # query = request.GET.get('query', '')
     print(f"QUERY ----------------> {query}")
     url = f"{IP}/search?query={query}"
 

@@ -13,7 +13,7 @@ from ..view.chocolate_1 import get_choco
 
 
 urlpatterns = [
-    path("api/chocolate/get-choco/<str:query>/", index_and_search_chocolates, name="index_and_search_chocolates"),
+    path("get-choco/<str:query>/", index_and_search_chocolates, name="index_and_search_chocolates"),
 ]
 
 # urlpatterns = [
