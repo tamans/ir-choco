@@ -4,14 +4,13 @@ import json
 import pandas as pd
 import numpy as np
 
-def initialize_terrier():
 
-    if not pt.started():
-        pt.init()
+if not pt.started():
+    pt.init()
     
-    # Revert SSL configuration to default
-    import ssl
-    ssl._create_default_https_context = ssl.create_default_context
+# Revert SSL configuration to default uncomment when it gives ssl errors
+# import ssl
+# ssl._create_default_https_context = ssl.create_default_context
 
 def load_data_from_json(data_dir, json_files):
     all_data = []
@@ -24,6 +23,7 @@ def load_data_from_json(data_dir, json_files):
             with open(json_path, 'r') as f:
                 data = json.load(f)
                 all_data.extend(data)
+
         except FileNotFoundError:
             print(f"File not found: {json_path}")
         except json.JSONDecodeError as e:
@@ -31,19 +31,11 @@ def load_data_from_json(data_dir, json_files):
     
     return all_data
 
-
-index_path = os.path.abspath('./index')
-save_path = os.path.abspath('./Indexing/index/choco.csv')
-
-
-"""
-indexing the query
-"""
-def create_index_and_search(query):
+def create_index():
     data_dir = os.path.abspath("../../../chocolate_crawler/Crawled/")
     json_files = ['laderach.json', 'spruengli.json', 'maxchocolatier.json']
     
-    initialize_terrier()
+    # initialize_terrier()
 
     all_data = load_data_from_json(data_dir, json_files)
 
@@ -55,7 +47,7 @@ def create_index_and_search(query):
     image = [item.get('img_link', '') for item in all_data]
     descriptions = [item.get('description', '') for item in all_data]
     ingredients = [item.get('ingredients', '') for item in all_data]
-    allergens = [item.get('allergens', '') for item in all_data]
+    allergens = [item.get('allergens', '') for all_data]
     prices = [item.get('price', '') for item in all_data]
 
     # Create a DataFrame
@@ -68,10 +60,7 @@ def create_index_and_search(query):
         'allergens': allergens,
         'price': prices
     }
-    # docs_df = pd.DataFrame(np.column_stack((idx, titles, image, descriptions, ingredients, allergens, prices)),
-    #                        columns=['docno', 'title', 'img_link','description', 'ingredients', 'allergens', 'price'])
 
-    
     docs_df = pd.DataFrame(docs_dict)
     save_path = os.path.abspath('./index/chocolate.csv')
     # print(save_path)
@@ -84,22 +73,14 @@ def create_index_and_search(query):
     index = pt.IndexFactory.of(index_ref)
 
     print(index.getCollectionStatistics().toString())
+    
+    return index
 
+def search_index(query):
+    index = create_index()
     br = pt.BatchRetrieve(index, wmodel="BM25")  # Alternative Models: "TF_IDF", "BM25"
     results = br.search(query)
     
     return results
 
-def search(query: str):
-    print(query)
-    # indexer = pt.DFIndexer(index_path, overwrite=True)
-    # index_ref = indexer.index(docs_df["description"], docs_df["docno"])
-    index = pt.IndexFactory.of('./index/chocolate.csv')
-    BM25 = pt.BatchRetrieve(index, wmodel='BM25')
-    output = BM25.search(query)
-    return output.to_dict()
 
-# Example usage
-query = "white chocolate CHF 20"
-search_results = create_index_and_search(query)
-print(search_results)

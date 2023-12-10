@@ -12,6 +12,8 @@
     "git-clone": "^0.2.0",
     "got": "^11.8.5",
     "http-cache-semantics": "^4.1.1",
+    "kmeans-js": "^0.1.2",
+    "ml-kmeans": "^6.0.0",
     "postcss": "^8.4.31",
     "vue": "^3.2.13",
     "vue-router": "4",
@@ -20,6 +22,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@babel/plugin-transform-private-methods": "^7.23.3",
     "@vue/cli": "^5.0.8",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",

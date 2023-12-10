@@ -38,6 +38,13 @@ Start server:
 ./manage.py migrate
 ```
 
+To see the database in sql run
+
+```
+./manage.py dbshell
+SELECT * FROM chocoFinder_chocolate;
+```
+
 
 chocoDir
 ```

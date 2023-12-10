@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "k-means": "^1.0.0"
+  }
+}

@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.http import HttpResponseServerError
 import requests
 from .models import Chocolate
-from chocoFinder.Indexing.index_num import create_index_and_search  # Adjust the import path
+from chocoFinder.Indexing.index_num import create_index_and_search 
 
 def index_and_search_chocolates(request, query):
     # try:

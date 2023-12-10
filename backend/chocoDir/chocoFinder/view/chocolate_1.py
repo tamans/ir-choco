@@ -36,3 +36,6 @@ def get_choco(request, query):
     else:
         # Return an error JsonResponse if the external API request fails
         return JsonResponse({"error": "External API request failed"}, status=response.status_code)
+
+def get_recommend():
+    return
