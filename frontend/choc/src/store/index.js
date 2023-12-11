@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 
 export default createStore({
-    id: "chocolate",
+    // id: "chocolate",
     state: {
         chocolate: [],
         recs: [],
@@ -51,15 +51,8 @@ export default createStore({
         }
     },
     getters: {
-        getChocolate: state => state.chocolate,
-        getRecs: state => state.recs,
+        getChocolate: (state) => state.chocolate,
+        getRecs: (state) => state.recs,
     },
 });
-
-// const store = createStore({
-//     state,
-//     mutations,
-//     actions,
-//     getters,
-// });
 

@@ -1,6 +1,6 @@
 <template>
   <div class="search-container">
-    <form action= ""  class="search-bar">
+    <div action= ""  class="search-bar">
       <input
         v-model="searchQuery"
         type="search"
@@ -9,10 +9,10 @@
         placeholder="Search..."
         aria-label="Search through site content"
       />
-      <button type="submit">
+      <button type="submit" @click="fetchData">
         <i class="fa fa-search" style="font-size: 18px"> </i>
       </button>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -27,6 +27,25 @@ export default defineComponent({
     return {
       searchQuery: "", // Add a data property to store the search query
     };
+  },
+  methods: {
+    async fetchData() {
+      console.log("Here")
+      console.log("Query:", this.searchQuery);
+
+      try {
+        await this.$store.dispatch("fetchChoco", this.searchQuery);
+        console.log("here");
+        const chocolates = this.$store.getters.getChocolate;
+        console.log("Chocolates:", chocolates);
+
+        // await this.$store.dispatch('fetchRecs', this.array);
+        // const recs = this.$store.getters.getRecs;
+        // console.log('Recs:', recs);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    },
   },
 });
 

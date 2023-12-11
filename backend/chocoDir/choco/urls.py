@@ -28,7 +28,8 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include("chocoFinder.urls")),
+    path("api/", include("chocoFinder.urls.fetch")),
+    # path("api/chocolate/get-choco/<str:query>/", get_choco, name="get_choco"),  # Add this line
 
 ]
 

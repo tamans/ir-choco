@@ -36,30 +36,8 @@ export default defineComponent({
     };
   },
 
-  methods: {
-    async fetchData() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const query = urlParams.get("q");
-      console.log("Query:", query);
-
-      try {
-        await this.$store.dispatch("fetchChoco", query);
-        console.log("here");
-        const chocolates = this.$store.getters.getChocolate;
-        console.log("Chocolates:", chocolates);
-
-        // await this.$store.dispatch('fetchRecs', this.array);
-        // const recs = this.$store.getters.getRecs;
-        // console.log('Recs:', recs);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    },
-  },
-
   mounted() {
     console.log("mounting???");
-    this.fetchData();
     console.log("mounted");
   },
 });

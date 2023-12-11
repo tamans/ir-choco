@@ -1,6 +1,7 @@
 import os
 import django
 import csv
+from choco import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'choco.settings')  
 

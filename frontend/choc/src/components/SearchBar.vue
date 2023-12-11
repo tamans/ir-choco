@@ -7,18 +7,19 @@
         </router-link>
       </div>
       <div class="search-container">
-        <form role="search" class="search-bar" id="form">
+        <div class="search-bar" id="form">
           <input
             type="search"
             id="query"
             name="q"
+            v-model="query"
             placeholder="Search..."
             aria-label="Search through site content"
           />
-          <button type="submit">
+          <button type="submit" @click="fetchData">
             <i class="fa fa-search" style="font-size: 18px"> </i>
           </button>
-        </form>
+        </div>
       </div>
     </div>
   </div>
@@ -46,25 +47,44 @@ export default defineComponent({
     };
   },
 
+  data() {
+    return {
+      query,
+    }
+  },
+
   methods: {
+
     async fetchData() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const query = urlParams.get("q");
-      console.log("Query:", query);
-
       try {
-        await this.$store.dispatch("fetchChoco", query);
-        console.log("here");
-        const chocolates = this.$store.getters.getChocolate;
-        console.log("Chocolates:", chocolates);
-
-        // await this.$store.dispatch('fetchRecs', this.array);
-        // const recs = this.$store.getters.getRecs;
-        // console.log('Recs:', recs);
+        console.log("Here")
+        console.log("Query:", this.query);
+        const search = await this.$store.dispatch("fetchChoco", this.query);
+        this.chocolates = search;
+        console.log("chocolates", this.chocolates);
+        console.log("what is happening");
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error loading chocolates:", error);
       }
     },
+
+    // async fetchData() {
+    //   console.log("Here")
+    //   console.log("Query:", this.query);
+
+    //   try {
+    //     await this.$store.dispatch("fetchChoco", query);
+    //     console.log("here");
+    //     const chocolates = this.$store.getters.getChocolate;
+    //     console.log("Chocolates:", chocolates);
+
+    //     // await this.$store.dispatch('fetchRecs', this.array);
+    //     // const recs = this.$store.getters.getRecs;
+    //     // console.log('Recs:', recs);
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   }
+    // },
   },
 
   mounted() {
@@ -89,6 +109,7 @@ div {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 3vh;
 }
 
 .search-container{

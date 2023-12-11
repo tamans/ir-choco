@@ -2,13 +2,13 @@
 from django.http import JsonResponse
 from django.http import HttpResponseServerError
 import requests
+import logging
 from .models import Chocolate
-from chocoFinder.Indexing.index_num import create_index_and_search 
-
 def index_and_search_chocolates(request, query):
+
     # try:
     # # Run the indexing script to create an index and search
-        # search_results = create_index_and_search(query)
+        # search_results = search_index(query)
 
     #     # Save the search results to the Chocolate model
     #     chocolates = []
@@ -33,19 +33,24 @@ def index_and_search_chocolates(request, query):
     #     return HttpResponseServerError(f"An error occurred: {str(e)}")
 
 
+
     IP = "http://localhost:8000"
     print(f"QUERY ----------------> {query}")
     url = f"{IP}/search?query={query}"
+    api_url = f'http://127.0.0.1:8000/api/chocolate/get-choco/{query}/'
+    response = requests.get(api_url)
+    print("CIAO")
+    api_url = f'http://127.0.0.1:8000/api/chocolate/get-choco/{query}/'
 
     try:
-        print(url)
-        response = requests.get(url)
+        print(api_url)
+        response = requests.get(api_url)
         response.raise_for_status()
     
         json_response = response.json()
-
+        print(json_response)
         chocolates = []
-        for docno in json_response["docno"].values():
+        for docno in json_response.get("docno", []):
             current_doc = Chocolate.objects.get(docno=docno)
             chocolates.append({
                 'docno': current_doc.docno,
@@ -56,6 +61,6 @@ def index_and_search_chocolates(request, query):
                 'price': current_doc.price,
             })
             print(chocolates)
-        return JsonResponse({"chococlates": chocolates})
+        return JsonResponse({"chocolates": chocolates})
     except requests.exceptions.RequestException as e:
         return JsonResponse({'error': str(e)}, status=500)
