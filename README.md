@@ -56,3 +56,11 @@ if in Backend chocoDir, ModuleNotFoundError: No module named 'corsheaders'
 ```
 pip install django-cors-headers
 ```
+
+install venv
+```
+python3 -m venv venv
+
+# to activate
+source /venv/bin/activate
+```

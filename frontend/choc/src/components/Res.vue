@@ -22,14 +22,14 @@
             type="number"
             class="price-input"
             v-model="minPrice"
-            step="0.01"
+            step="0.05"
             placeholder="Min Price"
           />
           <input
             type="number"
             class="price-input"
             v-model="maxPrice"
-            step="0.01"
+            step="0.05"
             placeholder="Max Price"
           />
           <button @click="filter(minPrice, maxPrice)">Filter</button>
@@ -106,7 +106,7 @@ export default defineComponent({
       clusteredData: {},
       data_filtered: [],
       data: [
-        {
+      {
           docno: "d1",
           title: "Christmas Pralines assorted 72pcs per box",
           site: "https://laderach.com/ch-en/10008296-pralines-assortiert-weihnachten-72er-packung",
@@ -122,7 +122,7 @@ export default defineComponent({
           ingredients:
             "sugar, cocoa butter, cocoa paste, whole powder, , , glucose, butter ( ), vegetable oils (palm kernel, palm, sunflower, coconut, rapeseed), skimmed powder, humectant (E420, E1103), , , dried coconut flakes, cream ( ), flour, invert sugar syrup, Chopped , , clarified butter ( ), caramel, emulsifier ( lecithin, sunflower lecithin), honey, vegetable fats (sunflower, rapeseed, illipe, shea, palm kernel, palm, coconut), , natural flavour, glucose syrup, fructose, coffee, cocoa beans kernels, maltodextrin, flavouring, natural flavouring substances, dextrose, salt, thickening agent (E414), protein, coating agent (E904), skim , ground cinnamon, anise, cocoa powder, coriander, malt, raising agent (E500), antioxidant (E306), fennel seeds, colouring (E100, E160b(ii)), cloves, Radish juice concentrate, Apple juice concentrate, black currant juice concentrate. milk milk wheat almond soya barley",
           allergens: "May contain egg, other nuts.",
-          price: "CHF 10.10",
+          price: "CHF 112.00",
         },
         {
           docno: "d2",
@@ -140,7 +140,7 @@ export default defineComponent({
           ingredients:
             "33%, sugar, cocoa paste, cocoa butter, vegetable oils (rapeseed), emulsifier ( lecithin, sunflower lecithin), natural flavouring substances. soya",
           allergens: "May contain egg, gluten (incl. wheat), milk, other nuts.",
-          price: "CHF 4.10",
+          price: "CHF 23.50",
         },
         {
           docno: "d3",
@@ -158,7 +158,7 @@ export default defineComponent({
           ingredients:
             "cocoa paste, sugar, cocoa butter, , , orange juice from concentrate, emulsifier ( lecithin, sunflower lecithin), fructose, lemon juice from concentrate, vegetable oils (rapeseed), blackberry juice, pineapple fibres, gelling agent (E440), natural flavouring substances, flavouring, acidifier (E330), cocoa powder. soya",
           allergens: "May contain egg, gluten (incl. wheat), milk, other nuts.",
-          price: "CHF 25.10",
+          price: "CHF 14.90",
         },
         {
           docno: "d4",
@@ -176,7 +176,7 @@ export default defineComponent({
           ingredients:
             "sugar, cocoa butter, cocoa paste, , whole powder, glucose, butter ( ), , vegetable oils (palm kernel, palm, sunflower, coconut), humectant (E420), , skimmed powder, , dried coconut flakes, invert sugar syrup, Chopped , , clarified butter ( ), honey, flour, cream ( ), emulsifier ( lecithin, sunflower lecithin), caramel, , fructose, cocoa beans kernels, vegetable fats (sunflower, rapeseed, shea, illipe, palm kernel, palm, coconut), maltodextrin, glucose syrup, natural flavour, dextrose, flavouring, natural flavouring substances, thickening agent (E414), salt, coating agent (E904), protein, cocoa powder, antioxidant (E306), raising agent (E500), malt, colouring (E100). milk almond wheat milk soya barley",
           allergens: "May contain egg, other nuts.",
-          price: "CHF 5.10",
+          price: "CHF 145.00",
         },
         {
           docno: "d5",
@@ -194,7 +194,7 @@ export default defineComponent({
           ingredients:
             "sugar, cocoa butter, whole powder, cocoa paste, , dried coconut flakes, skimmed powder, butter ( ), vegetable oils (palm kernel, sunflower, coconut, palm), , , honey, cream ( ), glucose, , emulsifier ( lecithin, sunflower lecithin), humectant (E420), dextrose, caramel, vegetable fats (shea, illipe, palm kernel, palm, coconut), natural flavour, clarified butter ( ), ground cinnamon, thickening agent (E414), anise, natural flavouring substances, coriander, cocoa powder, glucose syrup, fennel seeds, maltodextrin, cloves, colouring (E100, E160b(ii)), Radish juice concentrate, Apple juice concentrate, black currant juice concentrate. milk milk soya",
           allergens: "May contain egg, gluten (incl. wheat), other nuts.",
-          price: "CHF 21.10",
+          price: "CHF 14.50",
         },
         {
           docno: "d6",
@@ -212,7 +212,7 @@ export default defineComponent({
           ingredients:
             "sugar, 22%, cocoa butter, whole powder, cocoa paste, , skimmed powder, Whisky 2%, vegetable oils (rapeseed, coconut), glucose syrup, maltodextrin, emulsifier ( lecithin, sunflower lecithin), natural flavour, , butter ( ), thickening agent (E414), natural flavouring substances, cocoa powder. soya milk",
           allergens: "May contain egg, gluten (incl. wheat), other nuts.",
-          price: "CHF 21.10",
+          price: "CHF 18.90",
         },
         {
           docno: "d7",
@@ -230,7 +230,7 @@ export default defineComponent({
           ingredients:
             "sugar, cocoa butter, , whole powder, cocoa paste, , skimmed powder, , , fructose, vegetable oils (rapeseed), blackberry juice, emulsifier ( lecithin, sunflower lecithin), natural flavour, raspberry juice, raspberry puree, acidifier (E330), flavouring, natural flavouring substances, cocoa powder. soya",
           allergens: "May contain egg, gluten (incl. wheat), other nuts.",
-          price: "CHF 21.10",
+          price: "CHF 24.90",
         },
         {
           docno: "d8",
@@ -248,7 +248,7 @@ export default defineComponent({
           ingredients:
             "sugar, cocoa butter, cocoa paste, whole powder, , , butter ( ), glucose, vegetable oils (palm kernel, palm, sunflower, coconut, rapeseed), humectant (E420, E1103), skimmed powder, , , cream ( ), honey, invert sugar syrup, , Chopped , dried coconut flakes, clarified butter ( ), caramel, emulsifier ( lecithin, sunflower lecithin), flour, , fructose, natural flavour, coffee, cocoa beans kernels, maltodextrin, vegetable fats (sunflower, rapeseed, shea, illipe, palm kernel, palm, coconut), glucose syrup, dextrose, natural flavouring substances, flavouring, thickening agent (E414), salt, coating agent (E904), ground cinnamon, protein, cocoa powder, anise, coriander, malt, raising agent (E500), antioxidant (E306), colouring (E100), fennel seeds, cloves. milk milk almond soya wheat barley",
           allergens: "May contain egg, other nuts.",
-          price: "CHF 21.10",
+          price: "CHF 85.00",
         },
         {
           docno: "d9",
@@ -266,7 +266,7 @@ export default defineComponent({
           ingredients:
             "sugar, cocoa butter, whole powder, , , vegetable fats (palm kernel, coconut, palm), skimmed powder, cocoa paste, , honey, plum juice, humectant (E420), orange juice, caramel, ground cinnamon, natural flavouring substances, emulsifier ( lecithin, sunflower lecithin), natural flavour. soya",
           allergens: "May contain egg, gluten (incl. wheat), other nuts.",
-          price: "CHF 21.10",
+          price: "CHF 26.90",
         },
         {
           docno: "d10",
@@ -284,7 +284,7 @@ export default defineComponent({
           ingredients:
             "sugar, cocoa butter, cocoa paste, whole powder, , , glucose, butter ( ), vegetable oils (palm kernel, palm, sunflower, coconut, rapeseed), skimmed powder, humectant (E420, E1103), , , dried coconut flakes, cream ( ), flour, invert sugar syrup, Chopped , , clarified butter ( ), caramel, emulsifier ( lecithin, sunflower lecithin), honey, vegetable fats (sunflower, rapeseed, shea, illipe, palm kernel, palm, coconut), , natural flavour, glucose syrup, fructose, coffee, cocoa beans kernels, maltodextrin, flavouring, natural flavouring substances, dextrose, salt, thickening agent (E414), protein, coating agent (E904), skim , ground cinnamon, anise, cocoa powder, coriander, raising agent (E500), antioxidant (E306), malt, fennel seeds, colouring (E100, E160b(ii)), cloves, Radish juice concentrate, Apple juice concentrate, black currant juice concentrate. milk milk wheat almond soya barley",
           allergens: "May contain egg, other nuts.",
-          price: "CHF 21.10",
+          price: "CHF 260.000",
         },
         {
           docno: "d664",
