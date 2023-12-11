@@ -99,9 +99,14 @@ export default defineComponent({
 div {
   font-family: "Lucida Console", Courier, monospace;
 }
-* {
+
+body, html {
   margin: 0;
   padding: 0;
+  overflow: hidden; /* Disable scroll */
+  background-image: linear-gradient(rgba(230, 182, 229, 0.9), rgba(234, 127, 228, 0.9));
+  background-position: center;
+  background-size: cover;
 }
 
 .topnav {
@@ -121,7 +126,6 @@ div {
   background-size: cover;
 }
 
-
 form {
   display: flex;
   align-items: center;
@@ -129,7 +133,7 @@ form {
 
 form{
 
-   width: 50vh;
+  width: 50vh;
   height: 5vh;
   border-radius: 15px;
   padding: 5px 10px;
@@ -158,11 +162,10 @@ form:focus {
   width: 50.5vh;
   height: 40.5vh;
   transform: rotate(-45deg);
-  padding: 10vh;
+  padding: 0vh;
 }
 
 button{
-  
   background-color: #ffdbd1;
   border: 1px solid transparent;
 }

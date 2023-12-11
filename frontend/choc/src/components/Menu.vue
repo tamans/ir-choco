@@ -33,12 +33,24 @@ export default defineComponent({
   padding: 10px;
   background-color: transparent;
   margin-top: 4vh;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    width: 80px;  /* Adjust the width for mobile view */
+    height: 60px;  /* Adjust the height for mobile view */
+    margin-right: 10px;  /* Adjust the margin for mobile view */
+  }
 }
 
 .choco {
   width: 20vh;
-  height: 15.5vh;
+  height: 15vh;
   transform: rotate(-45deg);
   margin-right: 115vh;
+  @media (max-width: 768px) {
+    width: 80px;  /* Adjust the width for mobile view */
+    height: 60px;  /* Adjust the height for mobile view */
+    margin-right: 10px;  /* Adjust the margin for mobile view */
+  }
 }
 </style>

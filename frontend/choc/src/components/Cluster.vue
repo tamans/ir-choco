@@ -96,6 +96,11 @@ ul {
   border: 1px solid transparent;
   padding: 10px;
   border-radius: 10px;
+  @media (max-width: 768px) {
+    width: 80px;  /* Adjust the width for mobile view */
+    height: 60px;  /* Adjust the height for mobile view */
+    margin-right: 10px;  /* Adjust the margin for mobile view */
+  }
 }
 
 .result-box li {
@@ -109,5 +114,13 @@ ul {
 
 .details-column {
   flex: 2;
+}
+
+.body {
+  @media (max-width: 768px) {
+    width: 80px;  /* Adjust the width for mobile view */
+    height: 60px;  /* Adjust the height for mobile view */
+    margin-right: 10px;  /* Adjust the margin for mobile view */
+  }
 }
 </style>

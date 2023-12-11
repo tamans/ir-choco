@@ -52,23 +52,29 @@ div {
 body {
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  @media (max-width: 768px) {
+    width: 80px;  /* Adjust the width for mobile view */
+    height: 60px;  /* Adjust the height for mobile view */
+    margin-right: 10px;  /* Adjust the margin for mobile view */
+  }
 }
 
 .home {
   width: 100%;
-  height: 130vh; 
+  height: 100vh; 
   background-image: linear-gradient(#ffdbd1, #fa9ebc);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  overflow: hidden;
 }
 
 .choco {
   width: 50.5vh;
   height: 40.5vh;
   transform: rotate(-45deg);
-  margin-top: 0.5vh;
+  margin-top: 15vh;
   margin-bottom: 20vh;
 }
 

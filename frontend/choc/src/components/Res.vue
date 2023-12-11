@@ -554,13 +554,13 @@ ul {
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid transparent;
   border-radius: 10px;
-  padding: 2vh;
+  padding: 3vh;
 }
 
-.results {
+/* .results {
   padding-left: 5vh;
-  /* padding-right: 3vh; */
-}
+  
+} */
 
 input {
   width: 6vh;
@@ -572,7 +572,6 @@ input {
   border: 1px solid transparent;
   color: #fa9ebc;
 }
-
 .result-box {
   height: 20vh;
   width: 90vh;
@@ -592,6 +591,16 @@ input {
   padding: 10px;
   border-radius: 10px;
   position: relative;
+
+  @media (max-width: 768px) {
+   
+    /* Styles for mobile view */
+    flex-direction: column;
+    padding: 10px;
+    align-items: center;
+    
+  }
+
 }
 
 .result-box li {
@@ -750,4 +759,13 @@ a{
 p {
   color: rgb(255, 255, 255);
 }
+
+@media (max-width: 768px) {
+    .container {
+      /* Styles for mobile view */
+      flex-direction: column;
+      padding: 10px;
+      align-items: center;
+    }
+  }
 </style>

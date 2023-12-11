@@ -67,6 +67,7 @@ def create_index(data_dir, index_filename):
 def search_index(query):
     try:
         reverse_index = pt.IndexFactory.of('./index')
+        print(reverse_index)
         br = pt.BatchRetrieve(reverse_index, wmodel="BM25")
         results = br.search(query)
         print(reverse_index.getCollectionStatistics().toString())
@@ -77,8 +78,8 @@ def search_index(query):
         return []  
 
 
-# r = search_index("white chocolate")
-# print(r)
+r = search_index("white chocolate")
+print(r)
 
 
 

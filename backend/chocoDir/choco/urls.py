@@ -20,17 +20,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
-# from .view.chocolate_1 import get_choco
-# from ..chocoFinder.view.chocolate_1 import get_choco
-
-
-# from chocoFinder.views import search_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("chocoFinder.urls.fetch")),
-    # path("api/chocolate/get-choco/<str:query>/", get_choco, name="get_choco"),  # Add this line
-
 ]
 
 vue3_routes = []
