@@ -527,7 +527,6 @@ export default defineComponent({
 ul {
   list-style-type: none;
   margin: 0;
-  padding: 0;
 }
 
 /* Menu {
@@ -550,11 +549,23 @@ ul {
   padding-top: 0.5vh;
 }
 
+
 .filter-column {
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid transparent;
   border-radius: 10px;
   padding: 3vh;
+}
+
+@media (max-width: 768px) {
+  .columns {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .filter-column {
+    margin-bottom: 20px;
+  }
 }
 
 /* .results {
@@ -580,6 +591,15 @@ input {
   border: 1px solid transparent;
   padding: 10px;
   border-radius: 10px;
+}
+
+
+@media (max-width: 768px) {
+  .result-box {
+    width: 80vw;
+    height:auto;
+    padding-bottom: 20px;
+  }
 }
 
 .clusters-box {
@@ -748,6 +768,7 @@ button {
   background-color: rgb(241, 168, 188);
 }
 
+
 h3 {
   color: rgb(207, 118, 142);
 }
@@ -760,12 +781,5 @@ p {
   color: rgb(255, 255, 255);
 }
 
-@media (max-width: 768px) {
-    .container {
-      /* Styles for mobile view */
-      flex-direction: column;
-      padding: 10px;
-      align-items: center;
-    }
-  }
+
 </style>
